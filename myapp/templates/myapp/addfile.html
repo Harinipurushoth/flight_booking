@@ -1,0 +1,72 @@
+{% extends 'myapp/admin_navbar.html' %}
+
+{% block content %}
+    {% if messages %}
+        <div class="container mt-4">
+            <div class="row justify-content-center">
+                <div class="col-sm-6">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6" style="margin-top: 70px;">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center">Add Flight</h2>
+                        <form action="{% url 'addfile' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="flight-name">Flight Name</label>
+                                <input name="flight_name" class="form-control" type="text" id="flight-name">
+                            </div>
+                            <div class="form-group">
+                                <label for="source">Source</label>
+                                <input name="source" class="form-control" type="text" id="source">
+                            </div>
+                            <div class="form-group">
+                                <label for="dest">Destination</label>
+                                <input name="dest" class="form-control" type="text" id="dest">
+                            </div>
+                            <div class="form-group">
+                                <label for="nos">Number of Seats</label>
+                                <input name="nos" class="form-control" type="number" id="nos">
+                            </div>
+                            <div class="form-group">
+                                <label for="rem">Remaining Seats</label>
+                                <input name="rem" class="form-control" type="number" id="rem">
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input name="price" class="form-control" type="number" id="price">
+                            </div>
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input name="date" class="form-control" type="date" id="date">
+                            </div>
+                            <div class="form-group">
+                                <label for="time">Time</label>
+                                <input name="time" class="form-control" type="time" id="time">
+                            </div>
+                            <br>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-danger">Add Flight</button>
+                            </div>
+                            {{ error }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

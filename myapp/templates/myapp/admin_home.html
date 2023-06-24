@@ -1,0 +1,56 @@
+{% extends 'myapp/index_base.html' %}
+{% block content %}
+<style>
+    body {
+        background-image: url('static/mysite/images/bgadmin.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .login-container {
+        background-color: #f8f9fa;
+        border: 1px solid #ced4da;
+        padding: 20px;
+        border-radius: 5px;
+    }
+</style>
+<div class="container" >
+    <center><h2 style="margin-top: 70px;color: black">Welcome to AirIndia - Welcome Admin!!! </h2></center>
+    <div class="row justify-content-center" style="margin-top: 70px">
+        <div class="col-sm-6">
+            <div class="login-container">
+                <h2 class="text-center">Log in</h2>
+                <br>
+                <form action="{% url 'admin_home' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="example-email-input">Username:</label>
+                        <input name="name" class="form-control" type="text" id="example-email-input" required>
+                        <div class="invalid-feedback">Please enter a username.</div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="example-email-input">Password:</label>
+                        <input name="password" class="form-control" type="password" required>
+                        <div class="invalid-feedback">Please enter a password.</div>
+                    </div>
+                    <br>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-danger">Sign in</button>
+                    </div>
+                </form>
+                <p>{{error}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .login-container {
+        background-color: #f8f9fa;
+        border: 1px solid #ced4da;
+        padding: 20px;
+        border-radius: 5px;
+    }
+</style>
+{% endblock %}

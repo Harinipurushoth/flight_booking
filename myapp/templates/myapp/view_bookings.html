@@ -1,0 +1,51 @@
+{% extends 'myapp/admin_navbar.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <br>
+            <h2 class="card-title text-center">List of Bookings</h2>
+            <br>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead style="background-color:#dc3545; color: white;">
+                        <tr>
+                            <th>BOOKING ID</th>
+                            <th>USER ID</th>
+                            <th>USER NAME</th>
+                            <th>FLIGHT ID</th>
+                            <th>FLIGHT NAME</th>
+                            <th>SOURCE</th>
+                            <th>DESTINATION</th>
+                            <th>NUM OF SEATS</th>
+                            <th>PRICE</th>
+                            <th>DATE</th>
+                            <th>TIME</th>
+                            <th>STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in bookings %}
+                            <tr>
+                                <td>{{ booking.id }}</td>
+                                <td>{{ booking.userid }}</td>
+                                <td>{{ booking.name }}</td>
+                                <td>{{ booking.flightid }}</td>
+                                <td>{{ booking.flight_name }}</td>
+                                <td>{{ booking.source }}</td>
+                                <td>{{ booking.dest }}</td>
+                                <td>{{ booking.nos }}</td>
+                                <td>{{ booking.price }}</td>
+                                <td>{{ booking.date }}</td>
+                                <td>{{ booking.time }}</td>
+                                <td>{{ booking.status }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
