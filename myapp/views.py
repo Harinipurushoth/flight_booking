@@ -24,7 +24,6 @@ def home(request):
     else:
         return render(request, 'myapp/signin.html')
 
-
 @login_required(login_url='signin')
 def findflight(request):
     context = {}
@@ -43,12 +42,14 @@ def findflight(request):
     else:
         source_airports = Flight.objects.values_list('source', flat=True).distinct()
         dest_airports = Flight.objects.values_list('dest', flat=True).distinct()
+        date_choices = Flight.objects.values('date').distinct().order_by('date')
+        time_choices = Flight.objects.values('time').distinct().order_by('time')
         context['source_airports'] = source_airports
         context['dest_airports'] = dest_airports
+        context['date_choices'] = date_choices
+        context['time_choices'] = time_choices
 
     return render(request, 'myapp/findflight.html', context)
-
-
 
 
 @login_required(login_url='signin')
@@ -132,7 +133,13 @@ def signup(request):
         name_r = request.POST.get('name')
         email_r = request.POST.get('email')
         password_r = request.POST.get('password')
-        user = User.objects.create_user(name_r, email_r, password_r, )
+
+        if User.objects.filter(username=name_r).exists():
+            error_message = "Username already exists. Please choose a different username."
+            context["error_message"] = error_message
+            return render(request, 'myapp/signup.html', context)
+
+        user = User.objects.create_user(name_r, email_r, password_r)
         if user:
             login(request, user)
             return render(request, 'myapp/thank.html')
