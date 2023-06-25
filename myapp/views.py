@@ -32,12 +32,23 @@ def findflight(request):
         dest_r = request.POST.get('destination')
         date_r = request.POST.get('date')
         time_r = request.POST.get('time')
-        flight_list = Flight.objects.filter(source=source_r, dest=dest_r, date=date_r, time=time_r)
+
+        date_obj = datetime.strptime(date_r, "%B %d, %Y").date()
+
+        if time_r == 'midnight':
+            time_obj = datetime.strptime('12 AM', "%I %p").time()
+        elif time_r == 'noon':
+            time_obj = datetime.strptime('12 PM', "%I %p").time()
+        else:
+            time_r_adjusted = time_r.replace('.', '')
+            time_obj = datetime.strptime(time_r_adjusted, "%I %p").time()
+
+        flight_list = Flight.objects.filter(source=source_r, dest=dest_r, date=date_obj, time=time_obj)
+
         if flight_list:
             return render(request, 'myapp/list.html', {'flight_list': flight_list})
         else:
             messages.error(request, "Sorry, no flights available")
-            #context["show_alert"] = True
             return redirect('findflight')
     else:
         source_airports = Flight.objects.values_list('source', flat=True).distinct()
@@ -50,7 +61,6 @@ def findflight(request):
         context['time_choices'] = time_choices
 
     return render(request, 'myapp/findflight.html', context)
-
 
 @login_required(login_url='signin')
 def bookings(request):
