@@ -8,7 +8,7 @@
             <form action="{% url 'findflight' %}" method="post">
                 {% csrf_token %}
                 <div class="form-group row">
-                    <label for="source-input" class="col-2 col-form-label">From</label>
+                    <label for="source-input" class="col-2 col-form-label">Source</label>
                     <div class="col-10">
                         <select name="source" class="form-control" id="source-input">
                             {% for airport in source_airports %}
@@ -32,7 +32,7 @@
                     <div class="col-10">
                         <select name="date" class="form-control" id="date-input">
                             {% for option in date_choices %}
-                                <option value="{{ option.id }}">{{ option.date }}</option>
+                                <option value="{{ option.date }}">{{ option.date }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -42,28 +42,57 @@
                     <div class="col-10">
                         <select name="time" class="form-control" id="time-input">
                             {% for option in time_choices %}
-                                <option value="{{ option.id }}">{{ option.time }}</option>
+                                <option value="{{ option.time }}">{{ option.time }}</option>
                             {% endfor %}
                         </select>
-                    </div>
+                 </div>
                 </div>
                 <br>
                 <div class="pull-right">
                     <button type="submit" class="btn btn-danger float-right">Find flights</button>
                 </div>
             </form>
+            <br><br><br><br>
+        </div>
+    </div>
+</div>
+<div class="container" style="background-color: white">
+    <br><br>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="text-center">
+                <h3>All Flights</h3>
+            </div>
+            <br>
+            <table class="table table-striped" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Flight Name</th>
+                        <th>Source</th>
+                        <th>Destination</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for flight in all_flights %}
+                    <tr>
+                        <td>{{ flight.flight_name }}</td>
+                        <td>{{ flight.source }}</td>
+                        <td>{{ flight.dest }}</td>
+                        <td>{{ flight.date }}</td>
+                        <td>{{ flight.time }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
             {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
-           <!--{% if show_alert %}
-                <script>
-                    alert("Sorry, no flights available");
-                </script>
-            {% endif %} -->
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
     </div>
 </div>
