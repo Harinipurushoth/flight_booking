@@ -27,6 +27,8 @@ def home(request):
 @login_required(login_url='signin')
 def findflight(request):
     context = {}
+    all_flights = Flight.objects.all()
+    context['all_flights'] = all_flights
     if request.method == 'POST':
         source_r = request.POST.get('source')
         dest_r = request.POST.get('destination')
@@ -61,7 +63,7 @@ def findflight(request):
         context['time_choices'] = time_choices
 
     return render(request, 'myapp/findflight.html', context)
-
+    
 @login_required(login_url='signin')
 def bookings(request):
     context = {}
