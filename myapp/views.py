@@ -131,8 +131,7 @@ def seebookings(request,new={}):
     if book_list:
         return render(request, 'myapp/booklist.html', locals())
     else:
-        context["error"] = "Sorry no flights booked"
-        return render(request, 'myapp/findflight.html', context)
+        return render(request, 'myapp/no_bookings.html')
 
 def view_bookings(request):
     bookings = Book.objects.all()
