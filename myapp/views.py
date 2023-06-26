@@ -12,7 +12,6 @@ from django.contrib.auth.decorators import login_required
 from decimal import Decimal
 from django.contrib import auth,messages
 from datetime import datetime
-
 from django.contrib.admin.views.decorators import staff_member_required
 
 def index(request):
@@ -63,7 +62,7 @@ def findflight(request):
         context['time_choices'] = time_choices
 
     return render(request, 'myapp/findflight.html', context)
-    
+
 @login_required(login_url='signin')
 def bookings(request):
     context = {}
